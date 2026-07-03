@@ -7,8 +7,6 @@
 # url: https://github.com/ban2zai/discourse-logout-schedule
 # required_version: 3.0.0
 
-enabled_site_setting :discourse_logout_schedule_enabled
-
 module ::DiscourseLogoutSchedule
   PLUGIN_NAME = "discourse-logout-schedule"
 end
