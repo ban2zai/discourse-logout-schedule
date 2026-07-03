@@ -11,6 +11,8 @@ module ::DiscourseLogoutSchedule
   PLUGIN_NAME = "discourse-logout-schedule"
 end
 
+require_relative "lib/discourse_logout_schedule/engine"
+
 add_admin_route "logout_control.title", "logout-control"
 
 register_asset "stylesheets/common/logout-control.scss"
