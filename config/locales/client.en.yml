@@ -3,6 +3,7 @@ en:
     logout_control:
       title: "Logout Control"
       description: "Users listed here have active Discourse session tokens. This does not necessarily mean they are online right now."
+      loading: "Loading sessions..."
       search_placeholder: "Search username"
       actions:
         search: "Search"
@@ -39,3 +40,6 @@ en:
       notices:
         dry_run: "Dry-run: would delete %{tokens} tokens for %{users} users."
         completed: "Deleted %{tokens} tokens for %{users} users."
+      errors:
+        load: "Could not load active sessions."
+        logout: "Could not complete logout action."

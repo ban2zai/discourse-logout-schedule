@@ -13,11 +13,13 @@ end
 
 add_admin_route "logout_control.title", "logout-control"
 
+register_asset "stylesheets/common/logout-control.scss"
+
 Discourse::Application.routes.append do
-  get "/admin/plugins/logout-control" => "admin/plugins#index", constraints: StaffConstraint.new
   get "/admin/plugins/logout-control.json" => "admin/plugins/logout_control#index"
   post "/admin/plugins/logout-control/logout-all.json" => "admin/plugins/logout_control#logout_all"
   post "/admin/plugins/logout-control/users/:user_id/logout.json" => "admin/plugins/logout_control#logout_user"
+  get "/admin/plugins/logout-control" => "admin/plugins#index", constraints: StaffConstraint.new
 end
 
 after_initialize do

@@ -3,6 +3,7 @@ ru:
     logout_control:
       title: "Управление сессиями"
       description: "Здесь показаны пользователи с активными session token в Discourse. Это не значит, что они прямо сейчас онлайн."
+      loading: "Загружаю сессии..."
       search_placeholder: "Поиск по username"
       actions:
         search: "Найти"
@@ -41,3 +42,6 @@ ru:
       notices:
         dry_run: "Dry-run: было бы удалено %{tokens} токенов у %{users} пользователей."
         completed: "Удалено %{tokens} токенов у %{users} пользователей."
+      errors:
+        load: "Не удалось загрузить активные сессии."
+        logout: "Не удалось выполнить logout."
