@@ -54,7 +54,7 @@ export default class LogoutControlAdmin extends Component {
     this.error = null;
 
     try {
-      const data = await ajax("/admin/plugins/logout-control.json", {
+      const data = await ajax("/admin/plugins/logout-control/sessions", {
         data: {
           page,
           per_page: this.perPage,
@@ -122,7 +122,7 @@ export default class LogoutControlAdmin extends Component {
     this.error = null;
 
     try {
-      const result = await ajax("/admin/plugins/logout-control/logout-all.json", {
+      const result = await ajax("/admin/plugins/logout-control/logout-all", {
         type: "POST",
       });
 
@@ -147,7 +147,7 @@ export default class LogoutControlAdmin extends Component {
 
     try {
       const result = await ajax(
-        `/admin/plugins/logout-control/users/${user.user_id}/logout.json`,
+        `/admin/plugins/logout-control/users/${user.user_id}/logout`,
         { type: "POST" }
       );
 

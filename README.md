@@ -81,6 +81,14 @@ Jobs::DiscourseLogoutSchedule.new.execute(force: true)
 
 Ручные кнопки уважают `discourse_logout_schedule_dry_run`. Если dry-run включен, плагин покажет и залогирует, сколько токенов было бы удалено, но не удалит их.
 
+API страницы:
+
+```text
+GET /admin/plugins/logout-control/sessions
+POST /admin/plugins/logout-control/logout-all
+POST /admin/plugins/logout-control/users/:user_id/logout
+```
+
 ## Проверка логов
 
 ```bash
@@ -107,7 +115,7 @@ Discourse scheduled job просыпается каждые 5 минут. Пла
 
 ```bash
 ruby -c plugin.rb
-ruby -c app/controllers/admin/plugins/logout_control_controller.rb
+ruby -c app/controllers/discourse_logout_schedule/admin/logout_control_controller.rb
 ruby -c app/jobs/scheduled/discourse_logout_schedule.rb
 ruby -c lib/discourse_logout_schedule/exclusions.rb
 ruby -c lib/discourse_logout_schedule/session_browser.rb
