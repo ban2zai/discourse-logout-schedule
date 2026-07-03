@@ -1,0 +1,10 @@
+en:
+  site_settings:
+    discourse_logout_schedule_enabled: "Enable scheduled user session reset."
+    discourse_logout_schedule_day_of_week: "Weekday for scheduled user session reset."
+    discourse_logout_schedule_time: "Local time for scheduled user session reset in HH:MM format."
+    discourse_logout_schedule_timezone: "Timezone for scheduled user session reset, for example Asia/Krasnoyarsk."
+    discourse_logout_schedule_dry_run: "Log what would be reset without deleting session tokens."
+    discourse_logout_schedule_excluded_usernames: "Usernames excluded from scheduled session reset."
+    discourse_logout_schedule_excluded_groups: "Group names excluded from scheduled session reset. admins always remain excluded."
+    discourse_logout_schedule_log_result: "Log scheduled session reset results to Rails logger."

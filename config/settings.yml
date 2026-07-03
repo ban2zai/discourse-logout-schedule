@@ -1,0 +1,28 @@
+plugins:
+  discourse_logout_schedule_enabled:
+    default: false
+  discourse_logout_schedule_day_of_week:
+    default: "sunday"
+    type: enum
+    choices:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+  discourse_logout_schedule_time:
+    default: "03:00"
+  discourse_logout_schedule_timezone:
+    default: "Asia/Krasnoyarsk"
+  discourse_logout_schedule_dry_run:
+    default: true
+  discourse_logout_schedule_excluded_usernames:
+    default: ""
+    type: list
+  discourse_logout_schedule_excluded_groups:
+    default: "admins|staff"
+    type: list
+  discourse_logout_schedule_log_result:
+    default: true
