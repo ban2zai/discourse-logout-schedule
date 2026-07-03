@@ -1,0 +1,10 @@
+ru:
+  site_settings:
+    discourse_logout_schedule_enabled: "Включить плановый сброс пользовательских сессий."
+    discourse_logout_schedule_day_of_week: "День недели для планового сброса сессий."
+    discourse_logout_schedule_time: "Локальное время сброса сессий в формате HH:MM."
+    discourse_logout_schedule_timezone: "Часовой пояс для расписания, например Asia/Krasnoyarsk."
+    discourse_logout_schedule_dry_run: "Режим проверки: логировать, кого плагин разлогинил бы, но не удалять session token."
+    discourse_logout_schedule_excluded_usernames: "Пользователи, которых нельзя разлогинивать плановым или ручным сбросом."
+    discourse_logout_schedule_excluded_groups: "Группы, которые нельзя разлогинивать плановым или ручным сбросом. Администраторы всегда исключены дополнительно."
+    discourse_logout_schedule_log_result: "Писать результат сброса сессий в Rails logger."

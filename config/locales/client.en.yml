@@ -1,0 +1,41 @@
+en:
+  js:
+    logout_control:
+      title: "Logout Control"
+      description: "Users listed here have active Discourse session tokens. This does not necessarily mean they are online right now."
+      search_placeholder: "Search username"
+      actions:
+        search: "Search"
+        refresh: "Refresh"
+        logout_all: "Logout all eligible users"
+        logout_user: "Logout"
+        excluded: "Excluded"
+        previous: "Previous"
+        next: "Next"
+      summary:
+        active_sessions: "Active sessions"
+        active_users: "Users with sessions"
+        eligible_users: "Eligible users"
+        mode: "Mode"
+        dry_run_on: "Dry-run"
+        dry_run_off: "Real logout"
+      table:
+        user: "User"
+        sessions: "Sessions"
+        oauth_sessions:
+          one: "%{count} OAuth session"
+          other: "%{count} OAuth sessions"
+        last_login: "Last login"
+        last_seen: "Last seen"
+        ip: "Latest IP / user agent"
+        exclusion: "Exclusion"
+        action: "Action"
+        not_excluded: "No"
+        empty: "No active session tokens found."
+      pagination:
+        page: "Page %{page}, total users: %{total}"
+      badges:
+        staff: "staff"
+      notices:
+        dry_run: "Dry-run: would delete %{tokens} tokens for %{users} users."
+        completed: "Deleted %{tokens} tokens for %{users} users."

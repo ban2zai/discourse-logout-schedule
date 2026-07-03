@@ -59,6 +59,28 @@ Jobs::DiscourseLogoutSchedule.new.execute(force: true)
 
 Ручной запуск с `force: true` обходит расписание, но не записывает weekly run marker. Он нужен именно для проверки.
 
+## Ручное управление сессиями
+
+После установки плагина администратору доступна страница:
+
+```text
+/admin/plugins/logout-control
+```
+
+На странице показаны пользователи, у которых есть активные Discourse session token. Это не означает, что пользователь прямо сейчас онлайн: для ориентира рядом выводится время последней активности (`last_seen_at`).
+
+На странице есть:
+
+- сводка по активным session token;
+- поиск по username;
+- список пользователей с количеством сессий и OAuth-сессий;
+- последняя авторизация, последняя активность, последний IP и user agent;
+- причина исключения, если пользователь защищен настройками `admins`, `staff`, группой или username;
+- кнопка logout для отдельного пользователя;
+- кнопка logout всех пользователей, которые не попали в исключения.
+
+Ручные кнопки уважают `discourse_logout_schedule_dry_run`. Если dry-run включен, плагин покажет и залогирует, сколько токенов было бы удалено, но не удалит их.
+
 ## Проверка логов
 
 ```bash
@@ -85,9 +107,13 @@ Discourse scheduled job просыпается каждые 5 минут. Пла
 
 ```bash
 ruby -c plugin.rb
+ruby -c app/controllers/admin/plugins/logout_control_controller.rb
 ruby -c app/jobs/scheduled/discourse_logout_schedule.rb
+ruby -c lib/discourse_logout_schedule/exclusions.rb
+ruby -c lib/discourse_logout_schedule/session_browser.rb
 ruby -c lib/discourse_logout_schedule/session_reset.rb
-ruby -e "require 'yaml'; YAML.load_file('config/settings.yml')"
+ruby -c lib/discourse_logout_schedule/single_user_logout.rb
+ruby -e "require 'yaml'; %w[config/settings.yml config/locales/server.en.yml config/locales/server.ru.yml config/locales/client.en.yml config/locales/client.ru.yml].each { |f| YAML.load_file(f) }"
 ```
 
 Полные RSpec-сценарии нужно запускать внутри Discourse dev checkout:

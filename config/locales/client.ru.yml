@@ -1,0 +1,43 @@
+ru:
+  js:
+    logout_control:
+      title: "Управление сессиями"
+      description: "Здесь показаны пользователи с активными session token в Discourse. Это не значит, что они прямо сейчас онлайн."
+      search_placeholder: "Поиск по username"
+      actions:
+        search: "Найти"
+        refresh: "Обновить"
+        logout_all: "Разлогинить всех доступных"
+        logout_user: "Разлогинить"
+        excluded: "Исключён"
+        previous: "Назад"
+        next: "Вперёд"
+      summary:
+        active_sessions: "Активные сессии"
+        active_users: "Пользователи с сессиями"
+        eligible_users: "Доступны для logout"
+        mode: "Режим"
+        dry_run_on: "Dry-run"
+        dry_run_off: "Реальный logout"
+      table:
+        user: "Пользователь"
+        sessions: "Сессии"
+        oauth_sessions:
+          one: "%{count} OAuth-сессия"
+          few: "%{count} OAuth-сессии"
+          many: "%{count} OAuth-сессий"
+          other: "%{count} OAuth-сессии"
+        last_login: "Последняя авторизация"
+        last_seen: "Последняя активность"
+        ip: "Последний IP / user agent"
+        exclusion: "Исключение"
+        action: "Действие"
+        not_excluded: "Нет"
+        empty: "Активные session token не найдены."
+      pagination:
+        page: "Страница %{page}, всего пользователей: %{total}"
+      badges:
+        staff: "staff"
+      notices:
+        dry_run: "Dry-run: было бы удалено %{tokens} токенов у %{users} пользователей."
+        completed: "Удалено %{tokens} токенов у %{users} пользователей."

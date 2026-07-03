@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
-require "set"
-
 module ::DiscourseLogoutSchedule
   class SessionReset
     LAST_RUN_KEY = "last_run_key"
     MUTEX_KEY = "discourse_logout_schedule:session_reset"
     DAYS = %w[sunday monday tuesday wednesday thursday friday saturday].freeze
     TIME_PATTERN = /\A([01]?\d|2[0-3]):([0-5]\d)\z/
-    SPECIAL_GROUPS = %w[admins moderators staff].freeze
 
     Result = Struct.new(
       :status,
@@ -21,7 +18,21 @@ module ::DiscourseLogoutSchedule
       :excluded_groups,
       :message,
       keyword_init: true,
-    )
+    ) do
+      def to_h
+        {
+          status: status,
+          dry_run: dry_run,
+          run_key: run_key,
+          tokens_matched: token_count || 0,
+          affected_users: affected_user_count || 0,
+          tokens_deleted: deleted_token_count || 0,
+          excluded_users: excluded_users || [],
+          excluded_groups: excluded_groups || [],
+          message: message,
+        }
+      end
+    end
 
     def initialize(force: false)
       @force = force
@@ -79,8 +90,8 @@ module ::DiscourseLogoutSchedule
     end
 
     def reset_sessions(run_key:)
-      exclusions = exclusion_state
-      target_tokens = UserAuthToken.where.not(user_id: exclusions[:user_ids].to_a)
+      exclusions = Exclusions.new
+      target_tokens = UserAuthToken.where.not(user_id: exclusions.user_ids.to_a)
       token_count = target_tokens.count
       affected_user_count = target_tokens.distinct.count(:user_id)
       deleted_token_count = dry_run? ? 0 : target_tokens.delete_all
@@ -92,59 +103,10 @@ module ::DiscourseLogoutSchedule
         token_count: token_count,
         affected_user_count: affected_user_count,
         deleted_token_count: deleted_token_count,
-        excluded_users: exclusions[:users],
-        excluded_groups: exclusions[:groups],
+        excluded_users: exclusions.excluded_users,
+        excluded_groups: exclusions.configured_groups,
         message: "session reset completed",
       )
-    end
-
-    def exclusion_state
-      explicit_usernames = list_setting(SiteSetting.discourse_logout_schedule_excluded_usernames).map(&:downcase)
-      configured_groups = list_setting(SiteSetting.discourse_logout_schedule_excluded_groups).map(&:downcase)
-
-      user_ids = Set.new
-      user_ids.merge(User.where(admin: true).pluck(:id))
-      user_ids.merge(user_ids_for_usernames(explicit_usernames))
-      user_ids.merge(user_ids_for_special_groups(configured_groups))
-      user_ids.merge(user_ids_for_regular_groups(configured_groups))
-
-      {
-        user_ids: user_ids,
-        users: User.where(id: user_ids.to_a).order(:username).pluck(:id, :username),
-        groups: configured_groups,
-      }
-    end
-
-    def user_ids_for_usernames(usernames)
-      return [] if usernames.blank?
-
-      User.where("LOWER(username) IN (?)", usernames).pluck(:id)
-    end
-
-    def user_ids_for_special_groups(group_names)
-      ids = Set.new
-      ids.merge(User.where(admin: true).pluck(:id)) if (group_names & %w[admins staff]).present?
-      ids.merge(User.where(moderator: true).pluck(:id)) if (group_names & %w[moderators staff]).present?
-      ids.to_a
-    end
-
-    def user_ids_for_regular_groups(group_names)
-      regular_group_names = group_names - SPECIAL_GROUPS
-      return [] if regular_group_names.blank?
-
-      group_ids = Group.where("LOWER(name) IN (?)", regular_group_names).pluck(:id)
-      return [] if group_ids.blank?
-
-      GroupUser.where(group_id: group_ids).pluck(:user_id)
-    end
-
-    def list_setting(value)
-      case value
-      when Array
-        value
-      else
-        value.to_s.split(/[|,\n]/)
-      end.map(&:strip).reject(&:blank?)
     end
 
     def dry_run?
